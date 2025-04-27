@@ -1,0 +1,3 @@
+D:/lab_uni/OOP/Gitlab/cmake-build-debug/CMakeFiles/Gitlab.dir
+D:/lab_uni/OOP/Gitlab/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/lab_uni/OOP/Gitlab/cmake-build-debug/CMakeFiles/rebuild_cache.dir
