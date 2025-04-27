@@ -23,6 +23,7 @@ public:
     bool empty() const;
     bool find(const T& value) const;
     void print() const;
+
 };
 
 #include "SinglyLinkedList.cpp"
