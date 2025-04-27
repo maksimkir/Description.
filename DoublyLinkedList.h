@@ -26,6 +26,6 @@ public:
     void print() const;
 };
 
-#include "DoublyLinkedList.tpp"
+#include "DoublyLinkedList.cpp"
 
 #endif // DOUBLYLINKEDLIST_H
