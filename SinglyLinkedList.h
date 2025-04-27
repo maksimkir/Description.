@@ -25,6 +25,6 @@ public:
     void print() const;
 };
 
-#include "SinglyLinkedList.tpp"
+#include "SinglyLinkedList.cpp"
 
 #endif // SINGLYLINKEDLIST_H
