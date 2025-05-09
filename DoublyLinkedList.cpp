@@ -1,14 +1,13 @@
-#include "DoublyLinkedList.h"
+#ifndef DOUBLY_LINKED_LIST_CPP
+#define DOUBLY_LINKED_LIST_CPP
 
-template<typename T>
-DoublyLinkedList<T>::DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+#include "DoublyLinkedList.h"
 
 template<typename T>
 void DoublyLinkedList<T>::push_front(const T& value) {
     auto new_node = std::make_shared<Node<T>>(value);
-    if (!head) {
-        head = tail = new_node;
-    } else {
+    if (!head) head = tail = new_node;
+    else {
         new_node->next = head;
         head->prev = new_node;
         head = new_node;
@@ -18,9 +17,8 @@ void DoublyLinkedList<T>::push_front(const T& value) {
 template<typename T>
 void DoublyLinkedList<T>::push_back(const T& value) {
     auto new_node = std::make_shared<Node<T>>(value);
-    if (!tail) {
-        head = tail = new_node;
-    } else {
+    if (!tail) head = tail = new_node;
+    else {
         tail->next = new_node;
         new_node->prev = tail;
         tail = new_node;
@@ -36,19 +34,15 @@ void DoublyLinkedList<T>::pop_front() {
 }
 
 template<typename T>
-void DoublyLinkedList<T>::pop_back() {
-    if (!tail) return;
-    if (tail->prev.expired()) {
-        head.reset();
-        tail.reset();
-        return;
-    }
-    tail = tail->prev.lock();
-    tail->next.reset();
+T& DoublyLinkedList<T>::at(size_t index) {
+    auto temp = head;
+    for (size_t i = 0; temp && i < index; ++i) temp = temp->next;
+    if (!temp) throw std::out_of_range("Index out of range");
+    return temp->data;
 }
 
 template<typename T>
-T& DoublyLinkedList<T>::at(size_t index) {
+const T& DoublyLinkedList<T>::at(size_t index) const {
     auto temp = head;
     for (size_t i = 0; temp && i < index; ++i) temp = temp->next;
     if (!temp) throw std::out_of_range("Index out of range");
@@ -73,19 +67,7 @@ void DoublyLinkedList<T>::insert_at(size_t index, const T& value) {
 }
 
 template<typename T>
-void DoublyLinkedList<T>::erase_at(size_t index) {
-    if (index == 0) {
-        pop_front();
-        return;
-    }
-    auto temp = head;
-    for (size_t i = 0; temp && i < index; ++i) temp = temp->next;
-    if (!temp) throw std::out_of_range("Index out of range");
-    auto prev_node = temp->prev.lock();
-    if (prev_node) prev_node->next = temp->next;
-    if (temp->next) temp->next->prev = prev_node;
-    if (!temp->next) tail = prev_node;
-}
+bool DoublyLinkedList<T>::empty() const { return head == nullptr; }
 
 template<typename T>
 size_t DoublyLinkedList<T>::size() const {
@@ -96,21 +78,6 @@ size_t DoublyLinkedList<T>::size() const {
         temp = temp->next;
     }
     return count;
-}
-
-template<typename T>
-bool DoublyLinkedList<T>::empty() const {
-    return head == nullptr;
-}
-
-template<typename T>
-bool DoublyLinkedList<T>::find(const T& value) const {
-    auto temp = head;
-    while (temp) {
-        if (temp->data == value) return true;
-        temp = temp->next;
-    }
-    return false;
 }
 
 template<typename T>
